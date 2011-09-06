@@ -1,11 +1,17 @@
-presidents.js -- A game of Presidents (a.k.a. Asshole, Trou-de-cul in French!)
+presidents.js -- A game of Presidents (a card game, a.k.a. Asshole, or Trou-de-cul 
+                in French) in pure JS, with a simple but efficient AI
 
 Created by Christian Jauvin <cjauvin@gmail.com>
 May 2010
 
 To install: just unzip the "images" folder, and serve.
 
-Some parts of the UI are in French, but it should be very easy to change.
+Notes:
 
-Thanks to the creator of the free Function Icon Set:
-http://wefunction.com/2008/07/function-free-icon-set
+* Some parts of the UI are in French, but it should be very easy to change
+
+* The rules are based on a version of the game played in Quebec (i.e. they could
+  be quite different than yours)
+
+* Thanks to the creator of the free Function Icon Set:
+ http://wefunction.com/2008/07/function-free-icon-set
