@@ -174,7 +174,7 @@ var presidents = presidents || (function() {
                 visibility: 'hidden'
             });
 
-            var loading_div = jQuery('<div>Chargement...</div>').appendTo(tdc_div);
+            var loading_div = jQuery('<div>Loading...</div>').appendTo(tdc_div);
             loading_div.css({
                 color: 'orange',
                 position: 'absolute',
@@ -638,7 +638,7 @@ var presidents = presidents || (function() {
             var players = [];
             // set this to -1 for AI-only play
             var human_player_idx = Math.floor(Math.random() * 4);
-            var player_names = ['AI1', 'AI2', 'AI3', 'AI4'];
+            var player_names = ['AI-1', 'AI-2', 'AI-3', 'AI-4'];
             var pn_idx = 0;
 
             players[0] = new Player(human_player_idx != 0, 0, (human_player_idx != 0 ? player_names[pn_idx++] : 'You'));
