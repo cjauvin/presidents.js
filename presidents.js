@@ -1,5 +1,5 @@
 /*
-   presidents.js -- A game of Presidents (a card game, a.k.a. Asshole, or Trou-de-cul 
+   presidents.js -- A game of Presidents (a card game, a.k.a. Asshole, or Trou-de-cul
                     in French) in pure JS, with a simple but efficient AI
 
    Created by Christian Jauvin <cjauvin@gmail.com>
@@ -10,7 +10,7 @@
    Notes:
 
    * Some parts of the UI are in French, but it should be very easy to change
- 
+
    * The rules are based on a version of the game played in Quebec (i.e. they could
      be quite different than yours)
 
@@ -58,7 +58,7 @@ var presidents = presidents || (function() {
     var SHORT_ANIM_DELAY = 500;
     var AI_SKIP_ANIM_DELAY = 1000;
     var CENTER_CARD_PILE_POS = [250, 225];
-    
+
     // Card sets
     var ALL = 0;
     var SIMPLES = 1;
@@ -94,13 +94,13 @@ var presidents = presidents || (function() {
                 background: 'darkgreen',
                 border: '1px solid black',
                 position: 'relative'
-            }); 
+            });
 
             var rank_infos = [];
             var rank_infos_pos = [['5px', '5px'], ['500px', '5px'], ['520px', '470px'], ['5px', '470px']];
             var rank_infos_imgs = ['president.png', 'vice-president.png', 'secretaire.png', 'trou-de-cul.png'];
             var rank_play_icons = [];
-            var rank_play_icons_imgs = [['arrow_down_48.png', 'arrow_down_green_48.png'], ['arrow_left_48.png', 'arrow_left_green_48.png'], 
+            var rank_play_icons_imgs = [['arrow_down_48.png', 'arrow_down_green_48.png'], ['arrow_left_48.png', 'arrow_left_green_48.png'],
                                         ['arrow_up_48.png', 'arrow_up_green_48.png'], ['arrow_right_48.png', 'arrow_right_green_48.png']];
             var rank_play_icons_pos = [['250px', '100px'], ['475px', '275px'], ['300px', '425px'], ['90px', '275px']];
             var rank_star_icon_pos = [['90px', '100px'], ['460px', '100px'], ['460px', '425px'], ['90px', '425px']];
@@ -108,7 +108,7 @@ var presidents = presidents || (function() {
             var rank_next_rank_icons_imgs = ['president2.png', 'vice-president2.png', 'secretaire2.png', 'trou-de-cul2.png'];
             var rank_next_rank_icons_pos = [['100px', '25px'], ['520px', '135px'], ['440px', '485px'], ['35px', '400px']];
             var rank_next_rank_icons_dims = [['48px', '48px'], ['72px', '48px'], ['48px', '48px'], ['72px', '48px']];
- 
+
             for (var i = 0; i < 4; i++) {
 
                 rank_infos[i] = jQuery('<div />').appendTo(tdc_div);
@@ -129,7 +129,7 @@ var presidents = presidents || (function() {
                     color: 'yellow'
                 });
                 rank_infos[i].name = rank_infos_name;
-                
+
                 rank_infos_stats = jQuery('<div />').appendTo(rank_infos[i]);
                 rank_infos_stats.css({
                     'font-variant': 'small-caps',
@@ -162,7 +162,7 @@ var presidents = presidents || (function() {
                     height: rank_next_rank_icons_dims[i][1],
                     visibility: 'hidden'
                 });
-                
+
             }
 
             var star_icon = jQuery('<div />').appendTo(tdc_div);
@@ -250,7 +250,7 @@ var presidents = presidents || (function() {
                 card.bind('mouseout', function() {
                     card.img_div.css('border', '0px');
                 });
-                
+
                 // card selection mask (transparent blue)
                 var sel_div = jQuery('<div />').appendTo(card);
                 sel_div.css({
@@ -264,8 +264,8 @@ var presidents = presidents || (function() {
                 });
                 card.sel_div = sel_div;
 
-                // here we wrap the card method definitions inside anon functions, 
-                // to avoid the "closure in for loop" problem; the trick is to provide another scope 
+                // here we wrap the card method definitions inside anon functions,
+                // to avoid the "closure in for loop" problem; the trick is to provide another scope
                 // level to the card variable itself, card_copy, which is passed as param to anon functions
 
                 (function(card_copy) {
@@ -404,9 +404,9 @@ var presidents = presidents || (function() {
                     deck[i].setSelected(false);
                 }
             };
-           
+
             // Player object
-            
+
             var Player = function(is_ai, next_rank, name) {
 
                 var that = this;
@@ -424,14 +424,14 @@ var presidents = presidents || (function() {
                 this.sortCards = function() {
                     // sort by tdc_rank (3=low, joker=high)
                     // note: IE wants the compare fct to return -1,0,1
-                    this.sets[ALL].sort(function(a, b) { 
+                    this.sets[ALL].sort(function(a, b) {
                         if (a.tdc_rank >= b.tdc_rank) { return 1; }
                         else { return -1; }
                     });
                 };
 
                 this.setCards = function(cards) {
-                    this.sets[ALL] = cards;                    
+                    this.sets[ALL] = cards;
                     this.sortCards();
                 };
 
@@ -462,7 +462,7 @@ var presidents = presidents || (function() {
                     else if (last.tdc_rank == 13) { this.sets[JOKERS].push(last); }
                     else { this.sets[acc.length].push(acc.slice()); }
 
-                    // least_tdc_rank: rank of the smallest value set (weakest card), which we intend to play as the very last, just after a "cut card" (card with which we're sure to win the hand) 
+                    // least_tdc_rank: rank of the smallest value set (weakest card), which we intend to play as the very last, just after a "cut card" (card with which we're sure to win the hand)
                     this.least_tdc_rank = -1;
                     if ((n_jokers_out == 2 && this.sets[TWOS].length > 0) || this.sets[JOKERS].length > 0) {
                         if (this.sets[ALL][0].tdc_rank <= 11) {
@@ -480,7 +480,7 @@ var presidents = presidents || (function() {
                     if (!prev_play) { // first play (no previous one)
 
                         // From SIMPLES to QUADS..
-                        // 
+                        //
                         for (var p = 0; p < 2; p++) { // first pass with threshold, second without
                             for (var n = SIMPLES; n <= QUADS; n++) { // every sets from SIMPLES to QUADS
                                 if (this.sets[n].length > 0) {
@@ -520,7 +520,7 @@ var presidents = presidents || (function() {
                                     cards: this.sets[n].slice(0, n==JOKERS ? 1 : this.sets[n].length)
                                 };
                             }
-                        }                        
+                        }
 
                         // this point should not be reached
                         assert(false, 'ERROR in Player.playAI: could not find a valid first play');
@@ -575,7 +575,7 @@ var presidents = presidents || (function() {
                                             n: n_2s_required,
                                             player: this,
                                             cards: this.sets[TWOS].slice(0, n_2s_required)
-                                        };                                        
+                                        };
                                     }
                                     if (this.sets[JOKERS].length > 0 && prev_play.tdc_rank < 13) {
                                         this.removeCards([this.sets[JOKERS][0]]);
@@ -584,9 +584,9 @@ var presidents = presidents || (function() {
                                             n: 1,
                                             player: this,
                                             cards: [this.sets[JOKERS][0]]
-                                        };                                        
+                                        };
                                     }
-                                    
+
                                 }
                             }
                         }
@@ -601,9 +601,9 @@ var presidents = presidents || (function() {
                 };
 
                 this.isForcedToPlay = function(prev_play, is_last_to_play) {
-                    return (is_last_to_play || this.sets[ALL].length <= AI_NEAR_END_N_CARDS_THRESHOLD || 
+                    return (is_last_to_play || this.sets[ALL].length <= AI_NEAR_END_N_CARDS_THRESHOLD ||
                             this.sets[ALL].length > getAvgNumberOfCardsPerPlayer() + AI_N_CARDS_BELOW_AVG_MARGIN ||
-                            (prev_play.tdc_rank >= AI_STRONG_PLAY_TDC_RANK_THRESHOLD && 
+                            (prev_play.tdc_rank >= AI_STRONG_PLAY_TDC_RANK_THRESHOLD &&
                                 prev_play.player.sets[ALL].length <= AI_NEAR_END_N_CARDS_THRESHOLD));
                 };
 
@@ -638,13 +638,13 @@ var presidents = presidents || (function() {
             var players = [];
             // set this to -1 for AI-only play
             var human_player_idx = Math.floor(Math.random() * 4);
-            var player_names = ['Divan', 'Pipelette', 'Chachoux', 'M. Chat'];
+            var player_names = ['AI1', 'AI2', 'AI3', 'AI4'];
             var pn_idx = 0;
 
-            players[0] = new Player(human_player_idx != 0, 0, (human_player_idx != 0 ? player_names[pn_idx++] : 'Vous'));
-            players[1] = new Player(human_player_idx != 1, 1, (human_player_idx != 1 ? player_names[pn_idx++] : 'Vous'));
-            players[2] = new Player(human_player_idx != 2, 2, (human_player_idx != 2 ? player_names[pn_idx++] : 'Vous'));
-            players[3] = new Player(human_player_idx != 3, 3, (human_player_idx != 3 ? player_names[pn_idx++] : 'Vous'));
+            players[0] = new Player(human_player_idx != 0, 0, (human_player_idx != 0 ? player_names[pn_idx++] : 'You'));
+            players[1] = new Player(human_player_idx != 1, 1, (human_player_idx != 1 ? player_names[pn_idx++] : 'You'));
+            players[2] = new Player(human_player_idx != 2, 2, (human_player_idx != 2 ? player_names[pn_idx++] : 'You'));
+            players[3] = new Player(human_player_idx != 3, 3, (human_player_idx != 3 ? player_names[pn_idx++] : 'You'));
             var ranked_players = [null, null, null, null]; // rank -> Player (set in newGame)
 
             var card_zindex = 0;
@@ -719,7 +719,7 @@ var presidents = presidents || (function() {
                 }
                 return pp;
             };
-            
+
             // a string repr of a play (move)
             var reprPlay = function(play) {
                 if (!play) { return '<none>'; }
@@ -736,7 +736,7 @@ var presidents = presidents || (function() {
                     players[i].rebuild(n_jokers_out);
                 }
             };
-            
+
             var setStarIcon = function(visible) {
                 if (visible) {
                     var curr_player = ranked_players[curr_player_rank];
@@ -811,8 +811,8 @@ var presidents = presidents || (function() {
                                 return;
                             }
                             curr_player_idx -= 1; // possibly -1 if AI was first to play, but then will be reset to 0 right away
-                        } 
-                    } else { 
+                        }
+                    } else {
                         skips = true;
                         // AI skip anim
                         var cpi = rank_play_icons[curr_player.rank];
@@ -829,15 +829,15 @@ var presidents = presidents || (function() {
                         console.log('<end of turn>');
                         curr_player_rank = getNextPlayingRank(prev_play);
                         prev_play = null;
-                        curr_player_idx = 0;                            
+                        curr_player_idx = 0;
                         rebuildPlayers();
-                        setupBoard();                        
+                        setupBoard();
                     } else { // not last to play
                         curr_player_rank += 1;
                         curr_player_rank %= 4;
                         curr_player_idx += 1;
                     }
-                    
+
                     if (skips) { concludeSkipSequence(); }
 
                 // non-playing AI
@@ -845,7 +845,7 @@ var presidents = presidents || (function() {
 
                     curr_player_rank += 1;
                     curr_player_rank %= 4;
-                    playAI(); 
+                    playAI();
 
                 // non-playing human (the rank increment goes through him nevertheless)
                 } else if (!curr_player.is_ai && !curr_player.is_playing) {
@@ -857,18 +857,18 @@ var presidents = presidents || (function() {
                 // playing human
                 } else if (!curr_player.is_ai && curr_player.is_playing) {
 
-                    rank_play_icons[curr_human_rank].bind('click', playHuman);                    
+                    rank_play_icons[curr_human_rank].bind('click', playHuman);
                     rank_play_icons[curr_human_rank].css('visibility', 'visible');
 
-                } 
+                }
 
             };
 
             var isPlayValid = function(prev_play, cards) {
                 var n = cards.length;
-                if (n == 0) { 
+                if (n == 0) {
                     return (prev_play != null); // n==0 -> skip, but dont allow it as first play
-                } 
+                }
                 var c0 = cards[0];
                 // verify that cards form a set
                 for (var i = 0; i < n; i++) {
@@ -877,7 +877,7 @@ var presidents = presidents || (function() {
                 // if first to play, anything goes
                 if (!prev_play) {
                     return true;
-                } 
+                }
                 // check that tdc_rank is greater than prev_play's one
                 if (c0.tdc_rank <= prev_play.tdc_rank) {
                     return false;
@@ -931,7 +931,7 @@ var presidents = presidents || (function() {
                             human.rank_stats[human.next_rank] += 1;
                             human.is_playing = false;
                             n_remaining_players -= 1;
-                            next_won_rank += 1;                            
+                            next_won_rank += 1;
                             console.log('human, with rank', human.rank, 'won rank', human.next_rank, '(n_remaining_players={0})'.format(n_remaining_players));
                             if (n_remaining_players == 1) {
                                 var last_playing_player = getPlayersStillPlaying();
@@ -942,7 +942,7 @@ var presidents = presidents || (function() {
                                     visibility: 'visible'
                                 });
                                 end_of_game_reached = true;
-                                console.log('<game over>');                                
+                                console.log('<game over>');
                                 setDeckVisibility(false);
                                 setStarIcon(false);
                                 // hide all play icons (arrows)
@@ -951,7 +951,7 @@ var presidents = presidents || (function() {
                                 return;
                             }
                             curr_player_idx -= 1; // possibly -1 if AI was first to play, but then will be reset to 0 right away
-                        }                         
+                        }
                     } else {
                         console.log(reprPlay({n:0, player:human}));
                         // skip icon: show cross briefly, and disappear
@@ -1014,7 +1014,7 @@ var presidents = presidents || (function() {
 
             var startCardMover = function(cards, dest_pos, set_front_side) {
                 moving_cards = cards;
-                for (var i = 0; i < cards.length; i++) { 
+                for (var i = 0; i < cards.length; i++) {
                     cards[i].setSelected(false);
                     if (card_moving_context == 'play') {
                         cards[i].is_selectable = false;
@@ -1035,7 +1035,7 @@ var presidents = presidents || (function() {
 //                    console.log('step:', cards[i].step_pos);
 //                    console.log('end:', cards[i].end_pos);
                 }
-                if (card_moving_context == 'play') {                    
+                if (card_moving_context == 'play') {
                     n_moved_card_sets += 1;
                     moved_cards = moved_cards.concat(cards);
                 }
@@ -1115,17 +1115,17 @@ var presidents = presidents || (function() {
                 new_btn.css('visibility', 'hidden');
                 curr_player_rank = 0;
                 n_remaining_players = 4;
-                curr_player_idx = 0; 
+                curr_player_idx = 0;
                 prev_play = null;
                 n_jokers_out = 0;
-                next_won_rank = 0; 
+                next_won_rank = 0;
                 end_of_turn_reached = false;
                 end_of_game_reached = false;
                 for (var i = 0; i < players.length; i++) { // set new ranks
                     // if player was last to won, his next_rank was not set
                     var pi = players[i];
-                    if (pi.next_rank == null) { 
-                        pi.next_rank = 3; 
+                    if (pi.next_rank == null) {
+                        pi.next_rank = 3;
                         pi.rank_stats[3] += 1;
                     }
                     ranked_players[pi.next_rank] = pi;
@@ -1139,7 +1139,7 @@ var presidents = presidents || (function() {
                         var cpi = rank_play_icons[pi.rank];
                         cpi.bind('click', playHuman);
                         cpi.bind('mouseover', function() {
-                            if (!human_play_icon_animation) {                            
+                            if (!human_play_icon_animation) {
                                 cpi.css('background-image', cpi.arrow_highlight_img_url);
                             }
                         });
@@ -1216,9 +1216,9 @@ var presidents = presidents || (function() {
             new_btn.bind('click', newGame);
 
             setDeckVisibility(false);
-     
+
         } // TDC
 
     }; // module return {..}
- 
+
 })();
